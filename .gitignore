@@ -1,0 +1,11 @@
+# Dependency directory
+node_modules
+
+# for macOs
+.DS_Store
+
+# others
+.idea
+.babelrc
+.editorconfig
+.postcssrc.js
