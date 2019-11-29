@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from './login'
-// import system from './system'
-
-// const nav = () => import('../views/login.vue')
+import article from './article'
 
 Vue.use(Router)
 
 const routers = [
   ...login,
-  // system,
+  ...article,
   {
     path: '/',
     name: 'index',
@@ -17,13 +15,18 @@ const routers = [
       title: '首页',
       requireAuth: true
     },
-    // component: () => import('../views/nav')
+    component: () => import('../views/NavBar')
   }
-]
+];
+
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+};
 
 let router = new Router({
   routes: routers,
   mode: 'history'
-})
+});
 
 export default router

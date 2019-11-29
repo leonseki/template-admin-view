@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(function (response) {
     } else if (response.data.errorCode !== 0) {
       $vm.$Message.error(response.data.message);
     }
-    return response;
+    return response.data;
   } else {
     $vm.$Message.error('服务器开小差了，请稍后重试！');
     return Promise.reject({ code: response.status, message: '服务器开小差了，请稍后重试！'});

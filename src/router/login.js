@@ -1,11 +1,11 @@
 const loginRouters = [
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     meta: {
       title: '登录'
     },
-    component: () => import('../views/login')
+    component: () => import('../views/Login')
   }
 ]
 

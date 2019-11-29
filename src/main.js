@@ -3,20 +3,45 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 
-import VueRouter from 'vue-router'
 // 引入viewUI(iview)
 import viewUI from 'view-design'
 import 'view-design/dist/styles/iview.css';
+import VueCookie from 'vue-cookie';
 
 
-Vue.use(viewUI)
-Vue.use(VueRouter)
+Vue.use(viewUI);
+Vue.use(VueCookie);
 
+// 路由钩子
+
+router.beforeEach((to, from, next) => {
+  window.document.title = to.meta.title;
+  viewUI.LoadingBar.start();
+  if (Vue.cookie.get('is_login')) {
+    next();
+  } else {
+    if (to.path !== '/login') {
+      if (to.path !== '/') {
+        Vue.cookie.set('path', to.fullPath);
+      }
+      next({ path: '/login' })
+    } else {
+      next();
+    }
+  }
+});
+
+router.afterEach(() => {
+  viewUI.LoadingBar.finish();
+  window.scrollTo(0, 0)
+});
 
 /* eslint-disable no-new */
 window.$vm = new Vue({
   el: '#app',
   router: router,
+  store,
   render: h => h(App)
 })

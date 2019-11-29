@@ -63,7 +63,7 @@
   </div>
 </template>
 <script>
-  import loginApi from '../api/login';
+  import loginApi from '../api/loginApi';
   // 验证码倒计时
   const LAST_TIME = 60;
   export default {
@@ -113,6 +113,8 @@
               const { email, password } = self.accountData;
               loginApi.login({email, password}).then(res => {
                 if (res.data.errorCode === 0) {
+                  self.$cookie.set('is_login', 1)
+                  self.$router.replace('/');
                   self.$Message.success('登录成功')
                 }
               });
@@ -121,6 +123,8 @@
               const { email, messageCode } = self.accountData;
               loginApi.verificationLogin({email, code: messageCode}).then(res => {
                 if (res.data.errorCode === 0) {
+                  self.$cookie.set('is_login', 1);
+                  self.$router.replace('/');
                   self.$Message.success('登录成功')
                 }
               });
