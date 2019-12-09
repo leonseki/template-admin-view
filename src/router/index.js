@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from './login'
 import article from './article'
+import configCenter from './configCenter'
 
 Vue.use(Router)
 
 const routers = [
   ...login,
   ...article,
+  ...configCenter,
   {
     path: '/',
     name: 'index',

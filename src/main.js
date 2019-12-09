@@ -10,9 +10,13 @@ import viewUI from 'view-design'
 import 'view-design/dist/styles/iview.css';
 import VueCookie from 'vue-cookie';
 
+import VueParticles from 'vue-particles';
+
+
 
 Vue.use(viewUI);
 Vue.use(VueCookie);
+Vue.use(VueParticles);
 
 // 路由钩子
 

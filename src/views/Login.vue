@@ -1,66 +1,68 @@
 <template>
-  <div class="login-background">
-    <div class="login-wrapper">
-      <h1 style="text-align: center; margin: 10px 0">WebSite后台服务</h1>
-      <div style="text-align: center">
-        <!-- 密码登录 -->
-        <Form ref="passwordLogin" :model="accountData" :rules="ruleValidatePassword" v-show="loginType === 'PASSWORD'">
-          <form-item prop="email">
-            <Input size="large" type="text" v-model="accountData.email" placeholder="邮箱">
-              <Icon type="md-mail" slot="prepend"></Icon>
-            </Input>
-          </form-item>
-          <form-item prop="password">
-            <Input
-              size="large"
-              type="password"
-              v-model="accountData.password"
-              placeholder="密码">
-              <Icon type="md-lock" slot="prepend"></Icon>
-            </Input>
-          </form-item>
-          <form-item>
-            <Button type="success" :loading="isLoading" long  @click="handleSubmit('passwordLogin')">登录</Button>
-            <div class="footer" style="display: flex;justify-content: space-between">
-              <span>忘记密码,请联系管理员</span>
-              <a class="type" href="#" @click.prevent="changeLoginType('passwordLogin')">使用{{ loginType === 'PASSWORD' ? '验证码' : '密码'}}登录</a>
-            </div>
-          </form-item>
-        </Form>
-        <!-- 验证码登录 -->
-        <Form ref="messageCodeLogin" :model="accountData" :rules="ruleValidateMessageCode" v-show="loginType === 'MESSAGE_CODE'">
-          <form-item prop="email">
-            <Input size="large" type="text" v-model="accountData.email" placeholder="邮箱">
-              <Icon type="md-mail" slot="prepend"></Icon>
-            </Input>
-          </form-item>
-          <FormItem prop="messageCode">
-            <Row :gutter="5" type="flex" align="middle">
-              <Col span="14">
-                <Input
-                  size="large"
-                  v-model="accountData.messageCode"
-                  placeholder="验证码"
-                  :maxlength="6">
-                  <Icon type="md-text" slot="prepend"></Icon>
-                </Input>
-              </Col>
-              <Col span="10">
-                <Button type="primary" long @click="getCode" :disabled="btnDis">{{ btnTxt }}</Button>
-              </Col>
-            </Row>
-          </FormItem>
-          <form-item>
-            <Button type="success" long  @click="handleSubmit('messageCodeLogin')">登录</Button>
-            <div class="footer" style="display: flex;justify-content: space-between">
-              <span>忘记密码,请联系管理员</span>
-              <a class="type" href="#" @click.prevent="changeLoginType('messageCodeLogin')">使用{{ loginType === 'PASSWORD' ? '验证码' : '密码'}}登录</a>
-            </div>
-          </form-item>
-        </Form>
+    <div class="login-background">
+      <vue-particles class="particle">
+      </vue-particles>
+      <div class="login-wrapper">
+        <h1 style="text-align: center; margin: 10px 0">WebSite后台服务</h1>
+        <div style="text-align: center">
+          <!-- 密码登录 -->
+          <Form ref="passwordLogin" :model="accountData" :rules="ruleValidatePassword" v-show="loginType === 'PASSWORD'">
+            <form-item prop="email">
+              <Input size="large" type="text" v-model="accountData.email" placeholder="邮箱">
+                <Icon type="md-mail" slot="prepend"></Icon>
+              </Input>
+            </form-item>
+            <form-item prop="password">
+              <Input
+                size="large"
+                type="password"
+                v-model="accountData.password"
+                placeholder="密码">
+                <Icon type="md-lock" slot="prepend"></Icon>
+              </Input>
+            </form-item>
+            <form-item>
+              <Button type="success" :loading="isLoading" long  @click="handleSubmit('passwordLogin')">登录</Button>
+              <div class="footer" style="display: flex;justify-content: space-between">
+                <span>忘记密码,请联系管理员</span>
+                <a class="type" href="#" @click.prevent="changeLoginType('passwordLogin')">使用{{ loginType === 'PASSWORD' ? '验证码' : '密码'}}登录</a>
+              </div>
+            </form-item>
+          </Form>
+          <!-- 验证码登录 -->
+          <Form ref="messageCodeLogin" :model="accountData" :rules="ruleValidateMessageCode" v-show="loginType === 'MESSAGE_CODE'">
+            <form-item prop="email">
+              <Input size="large" type="text" v-model="accountData.email" placeholder="邮箱">
+                <Icon type="md-mail" slot="prepend"></Icon>
+              </Input>
+            </form-item>
+            <FormItem prop="messageCode">
+              <Row :gutter="5" type="flex" align="middle">
+                <Col span="14">
+                  <Input
+                    size="large"
+                    v-model="accountData.messageCode"
+                    placeholder="验证码"
+                    :maxlength="6">
+                    <Icon type="md-text" slot="prepend"></Icon>
+                  </Input>
+                </Col>
+                <Col span="10">
+                  <Button type="primary" long @click="getCode" :disabled="btnDis">{{ btnTxt }}</Button>
+                </Col>
+              </Row>
+            </FormItem>
+            <form-item>
+              <Button type="success" long  @click="handleSubmit('messageCodeLogin')">登录</Button>
+              <div class="footer" style="display: flex;justify-content: space-between">
+                <span>忘记密码,请联系管理员</span>
+                <a class="type" href="#" @click.prevent="changeLoginType('messageCodeLogin')">使用{{ loginType === 'PASSWORD' ? '验证码' : '密码'}}登录</a>
+              </div>
+            </form-item>
+          </Form>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
   import loginApi from '../api/loginApi';
@@ -112,7 +114,8 @@
             if (self.loginType === 'PASSWORD') {
               const { email, password } = self.accountData;
               loginApi.login({email, password}).then(res => {
-                if (res.data.errorCode === 0) {
+                console.log(res);
+                if (res.errorCode === 0) {
                   self.$cookie.set('is_login', 1)
                   self.$router.replace('/');
                   self.$Message.success('登录成功')
@@ -122,7 +125,7 @@
             } else if (self.loginType === 'MESSAGE_CODE') {
               const { email, messageCode } = self.accountData;
               loginApi.verificationLogin({email, code: messageCode}).then(res => {
-                if (res.data.errorCode === 0) {
+                if (res.errorCode === 0) {
                   self.$cookie.set('is_login', 1);
                   self.$router.replace('/');
                   self.$Message.success('登录成功')
@@ -167,12 +170,15 @@
   }
 </script>
 <style scoped>
+  .particle {
+    position: absolute;
+    height: 100%;
+    width: 100%
+  }
   .login-wrapper {
-    position: relative;
-    float: left;
-    width: 20%;
-    left: 40%;
-    margin-top: 10%;
+    margin: 150px auto;
+    min-width: 300px;
+    max-width: 350px;
   }
   .login-background {
     background-color: #fffffb;
@@ -192,3 +198,4 @@
     text-decoration: underline;
   }
 </style>
+

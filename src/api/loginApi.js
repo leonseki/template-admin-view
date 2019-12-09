@@ -1,8 +1,8 @@
 import axiosInstance from '../interceptors/axios';
 
 const LOGIN = '/api/login';
-const VERIFICATION_LOGIN = '/api/verificationCodeLogin';
-const GET_VERIFICATION_CODE = '/api/getVerificationCode';
+const VERIFICATION_LOGIN = '/api/login/verificationCodeLogin';
+const GET_VERIFICATION_CODE = '/api/login/getVerificationCode';
 
 export default {
   // 密码登录
