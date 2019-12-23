@@ -32,6 +32,15 @@ const navigation= [
         title: '账号列表', icon: 'md-people', name: 'account',
       },
     ]
+  },
+  {
+    title: 'Crawler',
+    icon: 'md-paw',
+    subItems: [
+      {
+        title: '文章列表', icon: 'ios-book', name: 'crawlerIndex',
+      },
+    ]
   }
 ];
 

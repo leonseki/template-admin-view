@@ -27,8 +27,8 @@
           <Row type="flex" justify="center" align="middle" :style="{'margin': '0 20px 0 0'}">
             <Dropdown :style="{'padding': '0 20px', 'font-size': '14px', 'line-height': '20px'}" @on-click="handleOpen">
               <a href="javascript:void(0)">
-                <span>{{this.userInfo.username}}</span>
-                <Icon type="md-arrow-dropdown" size="25"></Icon>
+                <span>{{this.accountInfo.username}}</span>
+                <Icon type="md-arrow-dropdown" size="27"></Icon>
               </a>
               <DropdownMenu slot="list">
                 <dropdownItem name="logout">退出登录</dropdownItem>
@@ -45,24 +45,23 @@
   </div>
 </template>
 <script>
-  import axios from '../interceptors/axios';
+  import loginApi from '../api/loginApi'
   import navigation from '../../constant/nav'
+
   export default {
     data () {
       return {
         isCollapsed: false,
-        userInfo: {},
+        accountInfo: {},
         items: navigation
       }
     },
     created () {
-      // this.getUserInfo();
-      // console.log(this.$route)
+      this.getAccountInfo();
     },
     computed: {
       activeName () {
-        let pathName = this.$router.name
-        return pathName
+        return this.$router.name
       },
       rotateIcon () {
         return ['menu-icon', this.isCollapsed ? 'rotate-icon' : '']
@@ -93,12 +92,12 @@
       },
       logout () {
       },
-      // getUserInfo () {
-      //   const _this = this
-      //   axios.get('api/users/info', {uid: 1}).then(res => {
-      //     if (res.code === 0 && res.data) _this.userInfo = res.data
-      //   })
-      // }
+      getAccountInfo () {
+        const _this = this;
+        loginApi.getAccountInfo().then(res => {
+          _this.accountInfo = res.data;
+        })
+      }
     }
   }
 </script>

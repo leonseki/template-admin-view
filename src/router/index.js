@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import login from './login'
 import article from './article'
 import configCenter from './configCenter'
+import crawler from './crawler'
 
 Vue.use(Router)
 
@@ -10,6 +11,7 @@ const routers = [
   ...login,
   ...article,
   ...configCenter,
+  ...crawler,
   {
     path: '/',
     name: 'index',

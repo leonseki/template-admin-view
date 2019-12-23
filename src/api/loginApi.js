@@ -3,6 +3,7 @@ import axiosInstance from '../interceptors/axios';
 const LOGIN = '/api/login';
 const VERIFICATION_LOGIN = '/api/login/verificationCodeLogin';
 const GET_VERIFICATION_CODE = '/api/login/getVerificationCode';
+const GET_ACCOUNT_INFO = '/api/login/getAccountInfo';
 
 export default {
   // 密码登录
@@ -20,5 +21,9 @@ export default {
     return axiosInstance.get(GET_VERIFICATION_CODE, {
       params: { email }
     })
+  },
+  // 获取用户基本信息
+  getAccountInfo() {
+    return axiosInstance.get(GET_ACCOUNT_INFO)
   }
 }
