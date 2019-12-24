@@ -14,7 +14,6 @@ const axiosInstance = axios.create({
 // Add a request interceptor
 axiosInstance.interceptors.request.use(function (config) {
   // Do something before request is sent
-  console.log(11111);
   return config;
 }, function (error) {
   // Do something with request error
@@ -24,7 +23,6 @@ axiosInstance.interceptors.request.use(function (config) {
 // Add a response interceptor
 axiosInstance.interceptors.response.use(function (response) {
   // Do something with response data
-  console.log(response);
   if (response.data) {
     // 根据返回值判断状态
     if (response.data.errorCode === NO_LOGIN_CODE) {
@@ -39,6 +37,11 @@ axiosInstance.interceptors.response.use(function (response) {
   }
 }, function (error) {
   // Do something with response error
+  if (error.response.data.errorCode === NO_LOGIN_CODE) {
+    router.replace('/login')
+  } else if (error.response.data.errorCode !== 0) {
+    $vm.$Message.error(error.response.data.message);
+  }
   return Promise.reject(error);
 });
 

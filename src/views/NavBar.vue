@@ -81,7 +81,7 @@
         this.$router.push({name: name})
       },
       showLogoutModal () {
-        const _this = this
+        const _this = this;
         this.$Modal.confirm({
           title: '退出',
           content: '<p>您确定要退出登录么</p>',
@@ -91,6 +91,12 @@
         })
       },
       logout () {
+        loginApi.logout().then(res => {
+          if (res.errorCode === 0) {
+            this.$Message.success('登出成功');
+            this.$router.push({name:'Login'});
+          }
+        })
       },
       getAccountInfo () {
         const _this = this;

@@ -1,6 +1,7 @@
 import axiosInstance from '../interceptors/axios';
 
 const LOGIN = '/api/login';
+const LOGOUT = '/api/login/logout';
 const VERIFICATION_LOGIN = '/api/login/verificationCodeLogin';
 const GET_VERIFICATION_CODE = '/api/login/getVerificationCode';
 const GET_ACCOUNT_INFO = '/api/login/getAccountInfo';
@@ -25,5 +26,9 @@ export default {
   // 获取用户基本信息
   getAccountInfo() {
     return axiosInstance.get(GET_ACCOUNT_INFO)
-  }
+  },
+  // 登出
+  logout() {
+    return axiosInstance.post(LOGOUT)
+  },
 }
